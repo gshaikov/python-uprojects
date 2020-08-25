@@ -5,7 +5,10 @@ import re
 from pathlib import Path
 from typing import Tuple
 
-from solution import highest_value_palindrome
+from solution import (
+    highest_value_palindrome_suboptimal,
+    highest_value_palindrome_optimal,
+)
 
 
 TEST_DIR = Path(__file__).parent
@@ -35,7 +38,7 @@ def run(data_length):
     big_number_len = len(big_number_str)
 
     def benched_function():
-        return highest_value_palindrome(big_number_str, big_number_len)
+        return highest_value_palindrome_optimal(big_number_str, big_number_len)
 
     benchmark(benched_function)
 
@@ -48,7 +51,7 @@ def run_bigfile():
         output_number = bigfile.readline()
         output_number = re.search("[0-9]+", output_number).group(0)
     start = time.perf_counter()
-    result = highest_value_palindrome(input_number, 21724)
+    result = highest_value_palindrome_optimal(input_number, 21724)
     end = time.perf_counter()
     assert result == output_number
     print("Length: {}, time: {}".format(len(input_number), end - start))
